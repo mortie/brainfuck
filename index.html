@@ -6,6 +6,16 @@
 </head>
 <body>
 	<div id="container">
+		<p>Examples:</p>
+		<select id="examplesSelect">
+			<option value="">Examples</option>
+			<option value="helloWorld">Hello World</option>
+			<option value="echoInput">Echo Input</option>
+			<option value="fibonacci">Fibonacci</option>
+		</select>
+
+		<div id="descriptionElement"></div>
+
 		<p>Input:</p>
 		<div id="inputElement" contenteditable="true"></div>
 
@@ -14,6 +24,7 @@
 
 		<p>Output:</p>
 		<div id="outputElement"></div>
+		<label><input type="checkbox" id="showNumbersCheckbox" />Show numbers instead of characters</label>
 
 		<p>Memory Map:</p>
 		<div id="memMapElement" class="table"></div>

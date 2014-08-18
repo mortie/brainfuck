@@ -30,6 +30,11 @@
 			return this._memory;
 		},
 
+		get currentChar()
+		{
+			return this._inputString[this._index];
+		},
+
 		"step": function()
 		{
 			var c = this._inputString[this._index];
@@ -65,6 +70,7 @@
 			case ".":
 				return this._memory[this._memoryPtr];
 			case ",":
+				this._memory[this._memoryPtr] = prompt("Input one character:").charCodeAt(0);
 				break;
 			}
 		},
