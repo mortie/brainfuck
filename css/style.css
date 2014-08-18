@@ -19,3 +19,18 @@
 {
 	background-color: red;
 }
+
+.table .key
+{
+	margin-right: 5px;
+	display: inline-block;
+	width: 40%;
+	text-align: right;
+}
+.table .val
+{
+	margin-left: 5px;
+	display: inline-block;
+	width: 40%;
+	text-align: left;
+}

@@ -25,6 +25,11 @@
 			return this._index;
 		},
 
+		get memory()
+		{
+			return this._memory;
+		},
+
 		"step": function()
 		{
 			var c = this._inputString[this._index];

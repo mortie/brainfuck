@@ -2,6 +2,7 @@
 {
 	var inputElement = document.getElementById("inputElement");
 	var outputElement = document.getElementById("outputElement");
+	var memMapElement = document.getElementById("memMapElement");
 	var stepButton = document.getElementById("stepButton");
 	var runButton = document.getElementById("runButton");
 	var inputChanged = false;
@@ -9,6 +10,7 @@
 
 	var bfInterpreter = new BFInterpreter(inputElement, outputElement);
 
+	//do things when someone input anyhting
 	inputElement.addEventListener("input", function(e)
 	{
 		inputChanged = true;
@@ -25,12 +27,26 @@
 	});
 
 	//reset interpreter
-	function reset()
+	function reset(clearOutput)
 	{
 		inputChanged = false;
 		bfInterpreter.reset();
 		bfInterpreter.inputString = inputString;
-		outputElement.innerHTML = "";
+		if (clearOutput === true)
+			outputElement.innerHTML = "";
+	}
+
+	function drawMemMap()
+	{
+		memMapElement.innerHTML = "";
+		bfInterpreter.memory.forEach(function(mem, i)
+		{
+			memMapElement.innerHTML += "<div class='key'>"+
+			                           i+":"+
+			                           "</div><div class='val'>"+
+			                           mem+
+			                           "</div>";
+		});
 	}
 
 	//handle stepping
@@ -38,15 +54,7 @@
 	{
 		//reset if user has input anything since last time
 		if (inputChanged)
-			reset();
-
-		//do the actual stepping
-		var res = bfInterpreter.step();
-		console.log(bfInterpreter);
-
-		//update output
-		if (typeof res === "number")
-			outputElement.innerHTML += res;
+			reset(true);
 
 		//update input
 		var i = bfInterpreter.index;
@@ -59,13 +67,24 @@
 		                         (midString || "")+
 		                         "</span>"+
 		                         (lastString || "");
+
+		//do the actual stepping
+		var res = bfInterpreter.step();
+		console.log(bfInterpreter);
+
+		drawMemMap();
+
+		//update output
+		if (typeof res === "number")
+			outputElement.innerHTML += res;
+		else if (res === false)
+			reset();
 	});
 
 	//handle running
 	runButton.addEventListener("click", function(e)
 	{
-		if (inputChanged)
-			reset();
+		reset(true);
 
 		while (true)
 		{
@@ -77,6 +96,10 @@
 			if (typeof res === "number")
 				outputElement.innerHTML += String.fromCharCode(res);
 		}
+
+		drawMemMap();
+
+		reset();
 	});
 
 	//read hash if appliccable
