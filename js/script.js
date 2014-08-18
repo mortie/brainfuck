@@ -16,7 +16,8 @@
 		inputChanged = true;
 		inputString = inputElement.innerHTML
 		                          .replace(/\&gt;/g, ">")
-		                          .replace(/\&lt;/g, "<");
+		                          .replace(/\&lt;/g, "<")
+		                          .replace(/\<\/*div\>/g, "\n");
 		location.hash = inputString;
 	});
 
@@ -70,7 +71,6 @@
 
 		//do the actual stepping
 		var res = bfInterpreter.step();
-		console.log(bfInterpreter);
 
 		drawMemMap();
 
@@ -105,8 +105,9 @@
 	//read hash if appliccable
 	if (location.hash !== "#")
 	{
-		inputElement.innerHTML = location.hash.substring(1);
-		inputString = location.hash.substring(1);
+		var str = decodeURIComponent(location.hash.substring(1));
+		inputElement.innerHTML = str;
+		inputString = str;
 		inputChanged = true;
 	}
 })();
